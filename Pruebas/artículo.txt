@@ -1,0 +1,53 @@
+https://docs.sqlalchemy.org/en/20/dialects/mssql.html
+
+https://www.slingacademy.com/article/sqlalchemy-connect-multiple-databases-concurrently/
+pip install sqlalchemy-pyodbc-mssql
+pip install Flask-SQLAlchemy
+ pip install sqlalchemy-access 
+ pip install --upgrade sqlalchemy
+ pip install sqlalchemy-turbodbc
+ pip install cython
+ pip install databricks-sql-connector
+pip install sqlalchemy-access     
+pip install sqlalchemy==1.3
+pip install SQLAlchemy==2.0.30
+pip install sqlalchemy pyodbc
+https://devcodef1.com/news/1106800/connecting-to-sql-server-with-sqlalchemy
+https://docs.sqlalchemy.org/en/14/dialects/mssql.html#module-sqlalchemy.dialects.mssql.pyodbc
+'mssql+pyodbc://gg:ostia@lenovo12:1433/iatest'
+https://stackoverflow.com/questions/49247884/querying-from-microsoft-sql-to-a-pandas-dataframe#:~:text=import%20pandas%20as%20pd%2C%20pyodbc%20%23%20Use%20pyodbc,no%20%23%20attribute%20%27keys%27%22%20result_port_map.columns%20%3D%20cursor.keys%20%28%29
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql_query.html#pandas-read-sql-query
+https://devcodef1.com/news/1106800/connecting-to-sql-server-with-sqlalchemy
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql_query.html#pandas-read-sql-query
+CREATE TABLE [CLIENTE] (
+    [Id_CLIENTE] INTEGER , 
+    [Id_EMPRESA] INTEGER , 
+    [CODCLI] NVARCHAR(10) , 
+    [DENOMI] NVARCHAR(100)
+    );
+CREATE TABLE [T_FACTURA] (
+    [Id_FACTURA] INTEGER, 
+    [Id_EMPRESA] INTEGER, 
+    [TIPOREG] VARCHAR(2) , 
+    [FACTURA] INTEGER NOT NULL, 
+    [FECHAF] DATE NOT NULL, 
+    [Id_CLIENTE] INTEGER NULL,
+    [Total] decimal(18,3) 
+    );
+
+-- T_FACTURA.Id_CLIENTE can be joined with Cliente.Id_CLIENTE
+
+
+CREATE TABLE [CLIENTE] ([Id_CLIENTE], [Id_EMPRESA] , [CODCLI] , [DENOMI]
+    );
+CREATE TABLE [T_FACTURA] (
+    [Id_FACTURA] INTEGER, 
+    [Id_EMPRESA] INTEGER, 
+    [TIPOREG] VARCHAR(2) , 
+    [FACTURA] INTEGER NOT NULL, 
+    [FECHAF] DATE NOT NULL, 
+    [Id_CLIENTE] INTEGER NULL,
+    [Total] decimal(18,3) 
+    );
+
+-- T_FACTURA.Id_CLIENTE can be joined with Cliente.Id_CLIENTE

@@ -48,23 +48,51 @@ from pandasai.llm.local_llm import LocalLLM
 from sqlalchemy import text
 
 #https://github.com/Sinaptik-AI/pandas-ai/blob/main/docs/llms.mdx
-ollama_llm = LocalLLM(api_base="http://localhost:11434/v1", model="llama3")
+ollama_llm = LocalLLM(api_base="http://localhost:11434/v1", model="Dolphin-llama3:8b",temperature=0)
+#ollama_llm = LocalLLM(api_base="http://localhost:11434/v1", model="llama3", temperature=0)#, max_tokens=32768)
+
+#ollama_llm = LocalLLM(api_base="http://localhost:11434/v1", model="mistral:latest")#, temperature=0)#, max_tokens=32768)
+
 #df = SmartDataframe("data.csv", config={"llm": ollama_llm})
 
 engine = create_engine("mssql+pyodbc://gg:ostia@lenovo12/iatest?driver=ODBC+Driver+17+for+SQL+Server")
 #...     data = pd.read_sql_table("data", conn)  
 with engine.connect() as conn, conn.begin():  
-    queryf = text("""SELECT Id_FACTURA,Id_EMPRESA,TIPOREG,FACTURA,[FECHAF],[Id_CLIENTE],[Total]  FROM T_FACTURA""")
+    queryf = text("""SELECT Id_FACTURA,Id_EMPRESA,TIPOREG,FACTURA,FECHAF,Id_CLIENTE,Total  FROM T_FACTURA""")
     facturas = pd.read_sql_query(queryf, conn)#, encoding='cp1252'
-    query = text("""SELECT [Id_CLIENTE], [Id_EMPRESA] , [CODCLI] , [DENOMI] FROM Cliente""")
+    query = text("""SELECT Id_CLIENTE, Id_EMPRESA , CODCLI , DENOMI FROM Cliente""")
     cliente = pd.read_sql_query(query, conn)
     agent1 = Agent([facturas,cliente])#, config={"direct_sql": True})
+    agent2 = Agent([facturas,cliente], config={"llm": ollama_llm})
 
 #response = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años muestrame en el resultado el nombre del cliente")
 #response = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años y muestrame en la respuesta El nombre del cliente")
-response = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años")
+#Me funcionóresponse = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años. El resultado muestra También el nombre del cliente")
 #response = agent1.chat("Muestra las facturas del cliente con denomi 'GRUPO MZ'  ")
 #response = agent1.chat("Muestra las facturas del cliente con denomi 'GRUPO MZ'  ")
+#response = agent1.chat("total de facturacion por cliente  agrupado por años Y ordenado por la mayor facturación. En El resultado muestra También el nombre del cliente")
+
+#response = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años muestrame en el resultado el nombre del cliente")
+#response = agent1.chat("total de facturacion del cliente 'GRUPO MZ' agrupado por años y muestrame en la respuesta El nombre del cliente")
+q="total de facturacion del cliente 'GRUPO MZ' agrupado por años. El resultado muestra También el nombre del cliente"
+#response = agent1.chat("Muestra las facturas del cliente con denomi 'GRUPO MZ'  ")
+#response = agent1.chat("Muestra las facturas del cliente con denomi 'GRUPO MZ'  ")
+q1="total de facturacion por cliente  agrupado por años Y ordenado por el total de  facturación. En El resultado muestra También el nombre del cliente"
+q1="total de facturacion por cliente  agrupado por años. En El resultado muestra También el nombre del cliente"
+q1="total de facturacion   agrupado por Cliente. En El resultado muestra También el nombre del cliente"
+
+q=" cuál ha sido el año con más facturación"
+q="Total de facturación agrupado por años "
+q="Total de facturación agrupado por años y ordenado por el total"
+q=" cuál ha sido el año con la mayor facturación"
+q=" cuál ha sido el año con más facturación"
+
+#response = agent1.chat(q1)
+
+#print(response)
+print("Que funcione")
+response = agent1.chat(q1)
+
 print(response)
 #conn.close()
 #engine.dispose()

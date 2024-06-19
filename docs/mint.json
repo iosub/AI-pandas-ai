@@ -14,11 +14,26 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["index", "getting-started"]
+      "pages": ["intro", "getting-started"]
     },
     {
-      "group": "Essentials",
-      "pages": ["connectors", "llms", "pipelines"]
+      "group": "Platform",
+      "pages": ["platform"]
+    },
+    {
+      "group": "Library",
+      "pages": [
+        "library",
+        "connectors",
+        "llms",
+        "pipelines",
+        "advanced-usage",
+        "examples"
+      ]
+    },
+    {
+      "group": "Advanced agents",
+      "pages": ["semantic-agent", "judge-agent"]
     },
     {
       "group": "Advanced usage",
@@ -32,10 +47,6 @@
         "skills",
         "determinism"
       ]
-    },
-    {
-      "group": "Examples",
-      "pages": ["examples"]
     },
     {
       "group": "About",
